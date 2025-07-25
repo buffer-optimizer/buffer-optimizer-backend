@@ -1,0 +1,844 @@
+{
+	"info": {
+		"_postman_id": "5f06837d-158d-4440-8734-2b91b38bdc0c",
+		"name": "Buffer Backend Complete API Collection",
+		"description": "Comprehensive API collection for all Buffer Content Optimizer backend endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13745917"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "OAuth Token Exchange",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"grant_type\": \"authorization_code\",\n  \"client_id\": \"your_buffer_client_id\",\n  \"client_secret\": \"your_buffer_client_secret\"\n}"
+						},
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/auth/oauth2/token.json",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"oauth2",
+								"token.json"
+							]
+						},
+						"description": "Exchange authorization code for access tokens"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints for OAuth flow"
+		},
+		{
+			"name": "SDK Endpoints",
+			"item": [
+				{
+					"name": "Get All Profiles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/sdk/profiles.json",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sdk",
+								"profiles.json"
+							]
+						},
+						"description": "Get all social media profiles"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/sdk/profiles/{{profile_id}}.json",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sdk",
+								"profiles",
+								"{{profile_id}}.json"
+							]
+						},
+						"description": "Get specific profile by ID (Note: Uses POST method as per your controller)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/sdk/profiles/{{profile_id}}/updates.json?page=1&count=20",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sdk",
+								"profiles",
+								"{{profile_id}}",
+								"updates.json"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								},
+								{
+									"key": "count",
+									"value": "20",
+									"description": "Posts per page"
+								}
+							]
+						},
+						"description": "Get posts for a specific profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Post",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/sdk/updates/{{post_id}}.json",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sdk",
+								"updates",
+								"{{post_id}}.json"
+							]
+						},
+						"description": "Get details of a specific post"
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"🚀 Just launched our new Buffer Content Optimizer! Helping creators maximize their social media impact with AI-powered insights. #SocialMedia #ContentCreation #AI\",\n  \"now\": false,\n  \"scheduled_at\": \"2024-02-15T14:00:00Z\",\n  \"media\": [\n    {\n      \"type\": \"image\",\n      \"url\": \"https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=600&fit=crop\",\n      \"alt_text\": \"Buffer Content Optimizer Dashboard\"\n    }\n  ],\n  \"shorten\": true\n}"
+						},
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/sdk/updates/{{profile_id}}.json",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sdk",
+								"updates",
+								"{{profile_id}}.json"
+							]
+						},
+						"description": "Create a new social media post (Note: endpoint uses postId in path as per your controller)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post Interactions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/sdk/updates/{{post_id}}/interactions.json",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sdk",
+								"updates",
+								"{{post_id}}",
+								"interactions.json"
+							]
+						},
+						"description": "Get engagement analytics for a specific post"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Posts Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/sdk/profiles/{{profile_id}}/analytics/posts.json",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sdk",
+								"profiles",
+								"{{profile_id}}",
+								"analytics",
+								"posts.json"
+							]
+						},
+						"description": "Get detailed analytics for all posts in a profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Analytics Summary",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/sdk/profiles/{{profile_id}}/analytics/summary.json?timeRange=30d",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sdk",
+								"profiles",
+								"{{profile_id}}",
+								"analytics",
+								"summary.json"
+							],
+							"query": [
+								{
+									"key": "timeRange",
+									"value": "30d",
+									"description": "Time range: 7d, 30d, 90d, 1y, custom"
+								},
+								{
+									"key": "start",
+									"value": "2024-01-01",
+									"description": "Custom start date (for custom timeRange)",
+									"disabled": true
+								},
+								{
+									"key": "end",
+									"value": "2024-01-31",
+									"description": "Custom end date (for custom timeRange)",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get aggregated analytics summary for a profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Insights",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{sdk_base_url}}/api/v1/sdk/profiles/{{profile_id}}/analytics/insights.json",
+							"host": [
+								"{{sdk_base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sdk",
+								"profiles",
+								"{{profile_id}}",
+								"analytics",
+								"insights.json"
+							]
+						},
+						"description": "Get AI-powered insights and recommendations for a profile"
+					},
+					"response": []
+				}
+			],
+			"description": "SDK endpoints from ProfileController (path: /api/v1/sdk)"
+		},
+		{
+			"name": "Analytics API",
+			"item": [
+				{
+					"name": "Get Posts Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/analytics/posts/{{profile_id}}?timeRange=30d&start=2024-01-01&end=2024-01-31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"analytics",
+								"posts",
+								"{{profile_id}}"
+							],
+							"query": [
+								{
+									"key": "timeRange",
+									"value": "30d",
+									"description": "Predefined range: 7d, 30d, 90d, 1y, custom"
+								},
+								{
+									"key": "start",
+									"value": "2024-01-01",
+									"description": "Start date (YYYY-MM-DD)"
+								},
+								{
+									"key": "end",
+									"value": "2024-01-31",
+									"description": "End date (YYYY-MM-DD)"
+								},
+								{
+									"key": "period",
+									"value": "day",
+									"description": "Grouping period: day, week, month",
+									"disabled": true
+								},
+								{
+									"key": "platforms",
+									"value": "x,linkedin",
+									"description": "Comma-separated platforms",
+									"disabled": true
+								},
+								{
+									"key": "includeMetrics",
+									"value": "likes,comments,shares",
+									"description": "Comma-separated metrics to include",
+									"disabled": true
+								},
+								{
+									"key": "groupBy",
+									"value": "week",
+									"description": "Group by: day, week, month",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get detailed analytics for posts via AnalyticsController"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Analytics Summary",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/analytics/summary/{{profile_id}}?timeRange=30d",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"analytics",
+								"summary",
+								"{{profile_id}}"
+							],
+							"query": [
+								{
+									"key": "timeRange",
+									"value": "30d",
+									"description": "Time range: 7d, 30d, 90d, 1y, custom"
+								}
+							]
+						},
+						"description": "Get analytics summary via AnalyticsController"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Optimal Times",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/analytics/optimal-times/{{profile_id}}?timeRange=90d",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"analytics",
+								"optimal-times",
+								"{{profile_id}}"
+							],
+							"query": [
+								{
+									"key": "timeRange",
+									"value": "90d",
+									"description": "Time range for analysis"
+								}
+							]
+						},
+						"description": "Get optimal posting times analysis"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dashboard Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/analytics/dashboard/{{profile_id}}?timeRange=30d",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"analytics",
+								"dashboard",
+								"{{profile_id}}"
+							],
+							"query": [
+								{
+									"key": "timeRange",
+									"value": "30d",
+									"description": "Time range for dashboard data"
+								}
+							]
+						},
+						"description": "Get comprehensive dashboard analytics data"
+					},
+					"response": []
+				}
+			],
+			"description": "Analytics endpoints from AnalyticsController (path: /api/v1/analytics)"
+		},
+		{
+			"name": "Posts API",
+			"item": [
+				{
+					"name": "List Posts for Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts/{{profile_id}}?page=1&count=20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"{{profile_id}}"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "count",
+									"value": "20",
+									"description": "Posts per page (default: 20)"
+								}
+							]
+						},
+						"description": "Get posts for a specific profile with filtering options"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"🎉 Exciting announcement! Our new AI-powered content optimizer is now live! Get better engagement with data-driven insights. #AI #SocialMedia #ContentOptimization\",\n  \"now\": false,\n  \"scheduled_at\": \"2024-02-20T15:00:00Z\",\n  \"media\": [\n    {\n      \"type\": \"image\",\n      \"url\": \"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop\",\n      \"alt_text\": \"AI Content Optimizer Interface\"\n    }\n  ],\n  \"shorten\": true,\n  \"attachment\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts/{{profile_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"{{profile_id}}"
+							]
+						},
+						"description": "Create a new post for a specific profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Post",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts/single/{{post_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"single",
+								"{{post_id}}"
+							]
+						},
+						"description": "Get details of a specific post by post ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts/analytics/{{post_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"posts",
+								"analytics",
+								"{{post_id}}"
+							]
+						},
+						"description": "Get analytics data for a specific post"
+					},
+					"response": []
+				}
+			],
+			"description": "Post management endpoints from PostController (path: /api/v1/posts)"
+		},
+		{
+			"name": "Plugins API",
+			"item": [
+				{
+					"name": "List All Plugins",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/plugins/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"plugins",
+								""
+							]
+						},
+						"description": "Get list of all available plugins"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Plugin Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/plugins/{{plugin_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"plugins",
+								"{{plugin_id}}"
+							]
+						},
+						"description": "Get details of a specific plugin"
+					},
+					"response": []
+				},
+				{
+					"name": "Execute Plugin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"profileId\": \"{{profile_id}}\",\n  \"timeRange\": {\n    \"start\": \"2024-01-01\",\n    \"end\": \"2024-01-31\",\n    \"period\": \"month\"\n  },\n  \"config\": {\n    \"minSampleSize\": 10,\n    \"confidenceThreshold\": 0.8\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/plugins/{{plugin_id}}/execute",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"plugins",
+								"{{plugin_id}}",
+								"execute"
+							]
+						},
+						"description": "Execute a specific plugin with provided context"
+					},
+					"response": []
+				},
+				{
+					"name": "Execute All Plugins",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"profileId\": \"{{profile_id}}\",\n  \"timeRange\": {\n    \"start\": \"2024-01-01\",\n    \"end\": \"2024-01-31\",\n    \"period\": \"month\"\n  },\n  \"config\": {\n    \"parallel\": true,\n    \"failFast\": false\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/plugins/execute-all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"plugins",
+								"execute-all"
+							]
+						},
+						"description": "Execute all available plugins with provided context"
+					},
+					"response": []
+				}
+			],
+			"description": "Plugin system endpoints from PluginController (path: /api/v1/plugins)"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Auto-set timestamp for requests",
+					"pm.globals.set('timestamp', new Date().toISOString());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Common tests for all endpoints",
+					"pm.test('Status code is successful', function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+					"});",
+					"",
+					"pm.test('Response has success field', function () {",
+					"    const jsonData = pm.response.json();",
+					"    pm.expect(jsonData).to.have.property('success');",
+					"});",
+					"",
+					"pm.test('Response has timestamp', function () {",
+					"    const jsonData = pm.response.json();",
+					"    pm.expect(jsonData).to.have.property('timestamp');",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8085",
+			"type": "string"
+		},
+		{
+			"key": "sdk_base_url",
+			"value": "http://localhost:8083",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "demo_access_token_1703001234567",
+			"type": "string"
+		},
+		{
+			"key": "profile_id",
+			"value": "profile_x_001",
+			"type": "string"
+		},
+		{
+			"key": "post_id",
+			"value": "post_x_001",
+			"type": "string"
+		},
+		{
+			"key": "plugin_id",
+			"value": "performance-analytics",
+			"type": "string"
+		}
+	]
+}
