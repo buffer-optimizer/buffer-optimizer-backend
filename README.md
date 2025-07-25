@@ -89,18 +89,12 @@ buffer-optimizer-backend/
 
 ```bash
 # Development
-npm run dev          # Start development server with hot reload
-npm run build        # Build TypeScript to JavaScript
-npm run start        # Start production server
+npm run build        # Build TypeScript to JavaScript for production
+npm run start        # Start development server with hot reload
 
-# Code Quality
-npm run lint         # Run ESLint
-npm run lint:fix     # Fix ESLint issues automatically
-npm run type-check   # Run TypeScript compiler check
 
 # Testing
 npm run test         # Run unit tests
-npm run test:watch   # Run tests in watch mode
 npm run test:coverage # Generate test coverage report
 ```
 
