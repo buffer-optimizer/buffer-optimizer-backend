@@ -90,7 +90,7 @@ buffer-optimizer-backend/
 ```bash
 # Development
 npm run build        # Build TypeScript to JavaScript for production
-npm run start        # Start development server with hot reload
+npm start            # Start development server with hot reload
 
 
 # Testing
@@ -401,18 +401,6 @@ class PostService {
 - **Connection Pooling**: Efficient database connection management
 - **Rate Limiting**: API protection against abuse
 - **Response Pagination**: Large datasets served in manageable chunks
-
-## 🧪 Testing
-
-### Unit Tests
-```bash
-npm run test
-```
-
-### Integration Tests
-```bash
-npm run test:integration
-```
 
 ### API Testing with Postman
 Import the provided Postman collection for comprehensive API testing:
